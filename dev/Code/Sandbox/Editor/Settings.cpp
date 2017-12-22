@@ -471,6 +471,7 @@ void SEditorSettings::Save()
     SaveValue("Settings", "AutoRemindTime", autoRemindTime);
     SaveValue("Settings", "CameraMoveSpeed", cameraMoveSpeed);
     SaveValue("Settings", "CameraRotateSpeed", cameraRotateSpeed);
+    SaveValue("Settings", "PlanarFlight", planarFlight);
     SaveValue("Settings", "StylusMode", stylusMode);
     SaveValue("Settings", "WheelZoomSpeed", wheelZoomSpeed);
     SaveValue("Settings", "InvertYRotation", invertYRotation);
@@ -744,6 +745,7 @@ void SEditorSettings::Load()
     LoadValue("Settings", "AutoRemindTime", autoRemindTime);
     LoadValue("Settings", "CameraMoveSpeed", cameraMoveSpeed);
     LoadValue("Settings", "CameraRotateSpeed", cameraRotateSpeed);
+    LoadValue("Settings", "PlanarFlight", planarFlight);
     LoadValue("Settings", "StylusMode", stylusMode);
     LoadValue("Settings", "WheelZoomSpeed", wheelZoomSpeed);
     LoadValue("Settings", "InvertYRotation", invertYRotation);
