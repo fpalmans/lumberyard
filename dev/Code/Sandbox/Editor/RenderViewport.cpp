@@ -788,7 +788,9 @@ bool  CRenderViewport::event(QEvent* event)
                 case Qt::Key_A:
                 case Qt::Key_Right:
                 case Qt::Key_D:
-                    respondsToEvent = true;
+				case Qt::Key_Q:
+				case Qt::Key_E:
+					respondsToEvent = true;
                     break;
 
                 default:
@@ -2586,8 +2588,29 @@ void CRenderViewport::ProcessKeys()
 
     //m_Camera.UpdateFrustum();
     Matrix34 m = GetViewTM();
-    Vec3 ydir = m.GetColumn1().GetNormalized();
-    Vec3 xdir = m.GetColumn0().GetNormalized();
+	Vec3 xdir;
+	Vec3 ydir;
+	Vec3 zdir;
+
+	//TODO: get from config
+	bool planarflight = true;
+
+	if (!planarflight)
+	{
+		ydir = m.GetColumn1().GetNormalized();
+		xdir = m.GetColumn0().GetNormalized();
+		zdir = m.GetColumn2().GetNormalized();
+	}
+	else
+	{
+		ydir = m.GetColumn1();
+		xdir = m.GetColumn0();
+		xdir.z = 0;
+		ydir.z = 0;
+		xdir = xdir.GetNormalized();
+		ydir = ydir.GetNormalized();
+		zdir = Vec3(0.0, 0.0, 1.0);
+	}
 
     Vec3 pos = GetViewTM().GetTranslation();
 
@@ -2658,6 +2681,24 @@ void CRenderViewport::ProcessKeys()
         m.SetTranslation(pos);
         SetViewTM(m, true);
     }
+
+	if (IsKeyDown(Qt::Key_Q))
+	{
+		bIsPressedSome = true;
+		m_nPresedKeyState = 1;
+		pos = pos - (speedScale * m_moveSpeed * zdir);
+		m.SetTranslation(pos);
+		SetViewTM(m, true);
+	}
+
+	if (IsKeyDown(Qt::Key_E))
+	{
+		bIsPressedSome = true;
+		m_nPresedKeyState = 1;
+		pos = pos + (speedScale * m_moveSpeed * zdir);
+		m.SetTranslation(pos);
+		SetViewTM(m, true);
+	}
 
     if (QGuiApplication::mouseButtons() & (Qt::RightButton | Qt::MiddleButton))
     {
