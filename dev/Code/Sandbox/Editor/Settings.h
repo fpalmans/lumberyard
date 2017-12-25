@@ -425,6 +425,7 @@ struct SANDBOX_API SEditorSettings
     float wheelZoomSpeed;
     bool invertYRotation;
     bool invertPan;
+    bool planarFlight;
     bool stylusMode; // if stylus mode is enabled, no setCursorPos will be performed (WACOM tablets, etc)
 
     //! Hide mask for objects.

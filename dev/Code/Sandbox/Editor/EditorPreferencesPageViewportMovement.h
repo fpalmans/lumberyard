@@ -47,6 +47,7 @@ private:
         float m_wheelZoomSpeed;
         bool m_invertYRotation;
         bool m_invertPan;
+        bool m_planarFlight;
     };
 
     CameraMovementSettings m_cameraMovementSettings;
