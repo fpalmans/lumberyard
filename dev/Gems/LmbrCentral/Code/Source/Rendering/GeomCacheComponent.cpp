@@ -552,13 +552,14 @@ namespace LmbrCentral
         }
     }
 
-    void GeometryCacheCommon::OnGeomCacheAssetChanged()
+    AZ::u32 GeometryCacheCommon::OnGeomCacheAssetChanged()
     {
         DestroyGeomCache();
         CreateGeomCache();
+        return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
-    void GeometryCacheCommon::OnMaterialOverrideChanged()
+    AZ::u32 GeometryCacheCommon::OnMaterialOverrideChanged()
     {
         LoadMaterialOverride();
         if (m_materialOverride)
@@ -574,6 +575,7 @@ namespace LmbrCentral
         {
             gEnv->p3DEngine->RegisterEntity(m_geomCacheRenderNode);
         }
+        return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
     void GeometryCacheCommon::OnStartTimeChanged()
