@@ -453,7 +453,7 @@ namespace LmbrCentral
         OnAssetReady(asset);
     }
 
-    void EditorLensFlareComponent::OnAssetChanged()
+    AZ::Crc32 EditorLensFlareComponent::OnAssetChanged()
     {
         m_selectedLensFlareLibrary.clear();
 
@@ -470,6 +470,7 @@ namespace LmbrCentral
         }
 
         EBUS_EVENT(AzToolsFramework::ToolsApplicationEvents::Bus, InvalidatePropertyDisplay, AzToolsFramework::Refresh_AttributesAndValues);
+        return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
     void EditorLensFlareComponent::SetPrimaryAsset(const AZ::Data::AssetId& id)

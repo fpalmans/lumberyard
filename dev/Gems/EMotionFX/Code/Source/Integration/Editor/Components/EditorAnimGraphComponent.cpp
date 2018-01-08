@@ -137,7 +137,7 @@ namespace EMotionFX
         }
 
         //////////////////////////////////////////////////////////////////////////
-        void EditorAnimGraphComponent::OnAnimGraphAssetSelected()
+        AZ::Crc32 EditorAnimGraphComponent::OnAnimGraphAssetSelected()
         {
             AZ::Data::AssetBus::Handler::BusDisconnect();
 
@@ -146,6 +146,8 @@ namespace EMotionFX
                 AZ::Data::AssetBus::Handler::BusConnect(m_animGraphAsset.GetId());
                 m_animGraphAsset.QueueLoad();
             }
+
+            return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
         }
 
         //////////////////////////////////////////////////////////////////////////

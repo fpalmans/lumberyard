@@ -425,7 +425,7 @@ Negative values will be ignored.\n")->
         }
     }
 
-    void EditorParticleComponent::OnAssetChanged()
+    AZ::Crc32 EditorParticleComponent::OnAssetChanged()
     {
         m_emitterNames.clear();
         m_emitter.Clear();
@@ -450,6 +450,7 @@ Negative values will be ignored.\n")->
         }
 
         EBUS_EVENT(AzToolsFramework::ToolsApplicationEvents::Bus, InvalidatePropertyDisplay, AzToolsFramework::Refresh_AttributesAndValues);
+        return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
     void EditorParticleComponent::SetPrimaryAsset(const AZ::Data::AssetId& id)

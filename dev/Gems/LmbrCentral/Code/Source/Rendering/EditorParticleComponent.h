@@ -113,7 +113,7 @@ namespace LmbrCentral
         void SetPrimaryAsset(const AZ::Data::AssetId& assetId) override;
 
         //! Invoked in the editor when the user assigns a new asset.
-        void OnAssetChanged();
+        AZ::Crc32 OnAssetChanged();
 
         //! Invoked in the editor when the user selects an emitter from the combo box.
         void OnEmitterSelected();

@@ -136,7 +136,7 @@ namespace ScriptCanvasEditor
         {
             m_scriptNotifyCallback(m_scriptCanvasAsset);
         }
-        return AZ::Edit::PropertyRefreshLevels::None;
+        return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
     void ScriptCanvasAssetHolder::OnAssetReady(AZ::Data::Asset<AZ::Data::AssetData> asset)

@@ -226,12 +226,13 @@ namespace EMotionFX
         }
 
         //////////////////////////////////////////////////////////////////////////
-        void EditorActorComponent::OnMaterialChanged()
+        AZ::Crc32 EditorActorComponent::OnMaterialChanged()
         {
             if (m_renderNode)
             {
                 m_renderNode->SetMaterials(m_materialPerLOD);
             }
+            return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
         }
 
         //////////////////////////////////////////////////////////////////////////

@@ -280,7 +280,7 @@ namespace LmbrCentral
         m_renderOptions.m_attachedToEntityId = id;
     }
 
-    AZ::u32 MeshComponentRenderNode::OnAssetPropertyChanged()
+    AZ::Crc32 MeshComponentRenderNode::OnAssetPropertyChanged()
     {
         if (HasMesh())
         {

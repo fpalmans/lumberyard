@@ -552,14 +552,14 @@ namespace LmbrCentral
         }
     }
 
-    AZ::u32 GeometryCacheCommon::OnGeomCacheAssetChanged()
+    AZ::Crc32 GeometryCacheCommon::OnGeomCacheAssetChanged()
     {
         DestroyGeomCache();
         CreateGeomCache();
         return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
-    AZ::u32 GeometryCacheCommon::OnMaterialOverrideChanged()
+    AZ::Crc32 GeometryCacheCommon::OnMaterialOverrideChanged()
     {
         LoadMaterialOverride();
         if (m_materialOverride)

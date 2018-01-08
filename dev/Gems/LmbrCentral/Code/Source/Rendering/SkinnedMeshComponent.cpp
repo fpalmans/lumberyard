@@ -275,7 +275,7 @@ namespace LmbrCentral
         m_attachedToEntityId = id;
     }
 
-    void SkinnedMeshComponentRenderNode::OnAssetPropertyChanged()
+    AZ::Crc32 SkinnedMeshComponentRenderNode::OnAssetPropertyChanged()
     {
         if (HasMesh())
         {
@@ -288,6 +288,8 @@ namespace LmbrCentral
         }
 
         CreateMesh();
+
+        return AZ::Edit::PropertyRefreshLevels::ValuesOnly;
     }
 
     void SkinnedMeshComponentRenderNode::RefreshRenderState()

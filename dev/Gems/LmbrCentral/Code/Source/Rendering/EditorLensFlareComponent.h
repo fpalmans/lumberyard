@@ -113,7 +113,7 @@ namespace LmbrCentral
         void SetPrimaryAsset(const AZ::Data::AssetId& assetId) override;
 
         //! Invoked in the editor when the user assigns a new lens flare.
-        void OnAssetChanged();
+        AZ::Crc32 OnAssetChanged();
 
         //! Invoked in the editor when the user selects a lens flare from the combo box.
         AZ::u32 OnLensFlareSelected();

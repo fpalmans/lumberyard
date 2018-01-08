@@ -117,7 +117,7 @@ namespace EMotionFX
 
             // Property callbacks.
             AZ::Crc32 OnAssetSelected();
-            void OnMaterialChanged();
+            AZ::Crc32 OnMaterialChanged();
             void OnDebugDrawFlagChanged();
             void OnSkinningMethodChanged();
             AZ::Crc32 OnAttachmentTypeChanged();

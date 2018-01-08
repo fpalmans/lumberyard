@@ -82,7 +82,7 @@ namespace EMotionFX
         private:
 
             // Property callbacks.
-            void OnAnimGraphAssetSelected();
+            AZ::Crc32 OnAnimGraphAssetSelected();
 
             // Called at edit-time when creating the component directly from an asset.
             void SetPrimaryAsset(const AZ::Data::AssetId& assetId);
