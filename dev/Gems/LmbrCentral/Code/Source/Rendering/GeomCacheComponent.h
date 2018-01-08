@@ -160,8 +160,8 @@ namespace LmbrCentral
 
         //Helper methods
         void OnRenderOptionsChanged();
-        void OnGeomCacheAssetChanged();
-        void OnMaterialOverrideChanged();
+        AZ::u32 OnGeomCacheAssetChanged();
+        AZ::u32 OnMaterialOverrideChanged();
         void OnStartTimeChanged();
         virtual void OnPlayOnStartChanged() {} //Only matters at edit time
         void OnLoopChanged();
