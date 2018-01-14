@@ -1841,7 +1841,7 @@ struct IRenderer
 
     virtual void OnEntityDeleted(struct IRenderNode* pRenderNode) = 0;
 
-    virtual int CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& clearColor, ETEX_Format eTF) = 0;
+    virtual int CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& clearColor, ETEX_Format eTF, uint32 flags = FT_NOMIPS) = 0;
     virtual bool DestroyRenderTarget (int nHandle) = 0;
     virtual bool SetRenderTarget(int nHandle, SDepthTexture* pDepthSurf = nullptr) = 0;
     virtual SDepthTexture* CreateDepthSurface(int nWidth, int nHeight, bool bAA) = 0;

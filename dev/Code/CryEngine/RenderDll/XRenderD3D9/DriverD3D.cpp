@@ -4893,7 +4893,7 @@ bool CD3D9Renderer::ScreenShot(const char* filename, int iPreWidth)
     return ScreenShotInternal(filename, iPreWidth);
 }
 
-int CD3D9Renderer::CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& clearColor, ETEX_Format eTF)
+int CD3D9Renderer::CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& clearColor, ETEX_Format eTF, uint32 flags)
 {
     // check if parameters are valid
     if (!nWidth || !nHeight)
@@ -4901,7 +4901,7 @@ int CD3D9Renderer::CreateRenderTarget(const char* name, int nWidth, int nHeight,
         return -1;
     }
 
-    CTexture* pTex = CTexture::CreateRenderTarget(name, nWidth, nHeight, clearColor, eTT_2D, FT_NOMIPS, eTF);
+    CTexture* pTex = CTexture::CreateRenderTarget(name, nWidth, nHeight, clearColor, eTT_2D, flags, eTF);
 
     return pTex->GetID();
 }

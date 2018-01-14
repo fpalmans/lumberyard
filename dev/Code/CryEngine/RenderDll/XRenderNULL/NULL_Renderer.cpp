@@ -457,7 +457,7 @@ void CNULLRenderer::DrawQuad(float dy, float dx, float dz, float x, float y, flo
 
 //////////////////////////////////////////////////////////////////////
 
-int CNULLRenderer::CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& cClear, ETEX_Format eTF)
+int CNULLRenderer::CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& cClear, ETEX_Format eTF, uint32 flags)
 {
     return 0;
 }
