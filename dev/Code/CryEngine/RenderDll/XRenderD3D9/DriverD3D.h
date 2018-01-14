@@ -935,7 +935,7 @@ public:
     virtual int GetCurrentContextViewportHeight() const { return (m_bDeviceLost ? -1 : m_CurrContext->m_nViewportHeight); }
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual int  CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& clearColor, ETEX_Format eTF = eTF_R8G8B8A8);
+    virtual int  CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& clearColor, ETEX_Format eTF = eTF_R8G8B8A8, uint32 flags = FT_NOMIPS) override;
     virtual bool DestroyRenderTarget(int nHandle);
     virtual bool SetRenderTarget(int nHandle, SDepthTexture* pDepthSurf = nullptr);
     virtual SDepthTexture* CreateDepthSurface(int nWidth, int nHeight, bool bAA);

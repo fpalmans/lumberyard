@@ -87,7 +87,7 @@ public:
     virtual int GetCurrentContextViewportHeight() const { return -1; }
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual int  CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& cClear, ETEX_Format eTF = eTF_R8G8B8A8);
+    virtual int  CreateRenderTarget(const char* name, int nWidth, int nHeight, const ColorF& cClear, ETEX_Format eTF = eTF_R8G8B8A8, uint32 flags = FT_NOMIPS);
     virtual bool DestroyRenderTarget(int nHandle);
     virtual bool SetRenderTarget(int nHandle, SDepthTexture* pDepthSurf = nullptr);
     virtual SDepthTexture* CreateDepthSurface(int nWidth, int nHeight, bool bAA);
