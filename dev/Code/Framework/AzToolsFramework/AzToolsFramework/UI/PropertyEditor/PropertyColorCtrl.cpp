@@ -40,7 +40,7 @@ namespace AzToolsFramework
         *(25[0-5]|2[0-4]\d|1\d\d|\d\d?)\s*,\s*){2} Match the first two "0-255,"
         *(25[0-5]|2[0-4]\d|1\d\d|\d\d?) Match the last "0-255"
         */
-        m_colorEdit->setValidator(new QRegExpValidator(QRegExp("^\\s*((25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\s*,\\s*){2}(25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\s*$")));
+        m_colorEdit->setValidator(new QRegExpValidator(QRegExp("^\\s*((25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\s*,\\s*){3}(25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\s*$")));
 
         m_pDefaultButton = new QToolButton(this);
         m_pDefaultButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -105,9 +105,9 @@ namespace AzToolsFramework
                 m_pColorDialog->setCurrentColor(m_color);
             }
 
-            int R, G, B;
-            m_color.getRgb(&R, &G, &B);
-            m_colorEdit->setText(QStringLiteral("%1,%2,%3").arg(R).arg(G).arg(B));
+            int R, G, B, A;
+            m_color.getRgb(&R, &G, &B, &A);
+            m_colorEdit->setText(QStringLiteral("%1,%2,%3,%4").arg(R).arg(G).arg(B).arg(A));
         }
     }
 
@@ -136,7 +136,7 @@ namespace AzToolsFramework
         }
 
         m_pColorDialog = new QColorDialog(m_color, this);
-        m_pColorDialog->setOption(QColorDialog::NoButtons);
+        m_pColorDialog->setOptions({ QColorDialog::NoButtons, QColorDialog::ShowAlphaChannel });
         connect(m_pColorDialog, SIGNAL(currentColorChanged(QColor)), this, SLOT(onSelected(QColor)));
 
         // Position the picker around cursor.
@@ -160,12 +160,13 @@ namespace AzToolsFramework
     QColor PropertyColorCtrl::convertFromString(const QString& string)
     {
         QStringList strList = string.split(",", QString::SkipEmptyParts);
-        int R = 0, G = 0, B = 0;
-        AZ_Assert(strList.size() == 3, "Invalid input string for RGB field!");
+        int R = 0, G = 0, B = 0, A=0;
+        AZ_Assert(strList.size() == 4, "Invalid input string for RGB field!");
         R = strList[0].trimmed().toInt();
         G = strList[1].trimmed().toInt();
         B = strList[2].trimmed().toInt();
-        return QColor(R, G, B);
+        A = strList[3].trimmed().toInt();
+        return QColor(R, G, B, A);
     }
 
     ////////////////////////////////////////////////////////////////
@@ -247,7 +248,7 @@ namespace AzToolsFramework
         return false;
     }
 
-    QWidget* Vector3ColorPropertyHandler::CreateGUI(QWidget* pParent)
+    QWidget* Vector4ColorPropertyHandler::CreateGUI(QWidget* pParent)
     {
         PropertyColorCtrl* newCtrl = aznew PropertyColorCtrl(pParent);
         connect(newCtrl, &PropertyColorCtrl::valueChanged, this, [newCtrl]()
@@ -258,27 +259,29 @@ namespace AzToolsFramework
 
         return newCtrl;
     }
-    void Vector3ColorPropertyHandler::ConsumeAttribute(PropertyColorCtrl* /*GUI*/, AZ::u32 /*attrib*/, PropertyAttributeReader* /*attrValue*/, const char* /*debugName*/)
+    void Vector4ColorPropertyHandler::ConsumeAttribute(PropertyColorCtrl* /*GUI*/, AZ::u32 /*attrib*/, PropertyAttributeReader* /*attrValue*/, const char* /*debugName*/)
     {
     }
-    void Vector3ColorPropertyHandler::WriteGUIValuesIntoProperty(size_t index, PropertyColorCtrl* GUI, property_t& instance, InstanceDataNode* node)
+    void Vector4ColorPropertyHandler::WriteGUIValuesIntoProperty(size_t index, PropertyColorCtrl* GUI, property_t& instance, InstanceDataNode* node)
     {
         (int)index;
         (void)node;
         QColor val = GUI->value();
-        AZ::Vector3 asVector3((float)val.redF(), (float)val.greenF(), (float)val.blueF());
-        instance = static_cast<property_t>(asVector3);
+        AZ::Vector4 asVector4(static_cast<float>(val.redF()), static_cast<float>(val.greenF())
+            , static_cast<float>(val.blueF()), static_cast<float>(val.alphaF()));
+        instance = static_cast<property_t>(asVector4);
     }
 
-    bool Vector3ColorPropertyHandler::ReadValuesIntoGUI(size_t index, PropertyColorCtrl* GUI, const property_t& instance, InstanceDataNode* node)
+    bool Vector4ColorPropertyHandler::ReadValuesIntoGUI(size_t index, PropertyColorCtrl* GUI, const property_t& instance, InstanceDataNode* node)
     {
         (int)index;
         (void)node;
-        AZ::Vector3 asVector3 = static_cast<AZ::Vector3>(instance);
+        AZ::Vector4 asVector4 = static_cast<AZ::Vector4>(instance);
         QColor asQColor;
-        asQColor.setRedF((qreal)asVector3.GetX());
-        asQColor.setGreenF((qreal)asVector3.GetY());
-        asQColor.setBlueF((qreal)asVector3.GetZ());
+        asQColor.setRedF((qreal)asVector4.GetX());
+        asQColor.setGreenF((qreal)asVector4.GetY());
+        asQColor.setBlueF((qreal)asVector4.GetZ());
+        asQColor.setAlphaF((qreal)asVector4.GetW());
         GUI->setValue(asQColor);
         return false;
     }
@@ -286,7 +289,7 @@ namespace AzToolsFramework
     ////////////////////////////////////////////////////////////////
     void RegisterColorPropertyHandlers()
     {
-        EBUS_EVENT(PropertyTypeRegistrationMessages::Bus, RegisterPropertyType, aznew Vector3ColorPropertyHandler());
+        EBUS_EVENT(PropertyTypeRegistrationMessages::Bus, RegisterPropertyType, aznew Vector4ColorPropertyHandler());
         EBUS_EVENT(PropertyTypeRegistrationMessages::Bus, RegisterPropertyType, aznew AZColorPropertyHandler());
     }
 }
