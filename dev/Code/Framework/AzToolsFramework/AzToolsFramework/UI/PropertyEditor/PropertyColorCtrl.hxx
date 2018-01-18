@@ -85,12 +85,12 @@ namespace AzToolsFramework
     };
 
 
-    class Vector3ColorPropertyHandler : QObject, public ColorHandlerCommon<AZ::Vector3>
+    class Vector4ColorPropertyHandler : QObject, public ColorHandlerCommon<AZ::Vector4>
     {
         // this is a Qt Object purely so it can connect to slots with context.  This is the only reason its in this header.
         Q_OBJECT
     public:
-        AZ_CLASS_ALLOCATOR(Vector3ColorPropertyHandler, AZ::SystemAllocator, 0);
+        AZ_CLASS_ALLOCATOR(Vector4ColorPropertyHandler, AZ::SystemAllocator, 0);
 
         virtual QWidget* CreateGUI(QWidget* pParent) override;
         virtual void ConsumeAttribute(PropertyColorCtrl* GUI, AZ::u32 attrib, PropertyAttributeReader* attrValue, const char* debugName) override;
