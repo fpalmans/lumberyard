@@ -178,7 +178,8 @@ enum ERenderCommand
     eRC_SetColorOp,
     eRC_SetSrgbWrite,
 
-    eRC_AzFunction
+    eRC_AzFunction,
+    eRC_GenerateMipMaps
 };
 
 //====================================================================
@@ -671,7 +672,7 @@ struct SRenderThread
     void        RC_RenderDebug(bool bRenderStats = true);
     void    RC_PushSkinningPoolId(uint32);
     void        RC_ReleaseRemappedBoneIndices(IRenderMesh* pRenderMesh, uint32 guid);
-
+    void    RC_GenerateMipMaps(CTexture* texture, bool bSetOrthoProj, bool bUseHW, bool bNormalMap);
     using RenderCommandCB = AZStd::function<void()>;
     void EnqueueRenderCommand(RenderCommandCB command);
 

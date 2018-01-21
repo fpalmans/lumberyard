@@ -1860,7 +1860,8 @@ public:
     bool IsAsyncDevTexCreation() const { return m_bAsyncDevTexCreation; }
 
     // note: render target should be created with FT_FORCE_MIPS flag
-    virtual bool GenerateMipMaps(bool bSetOrthoProj = false, bool bUseHW = true, bool bNormalMap = false) override;
+    virtual void GenerateMipMaps(bool bSetOrthoProj = false, bool bUseHW = true, bool bNormalMap = false) override;
+    void RT_GenerateMipMaps(bool bSetOrthoProj = false, bool bUseHW = true, bool bNormalMap = false);
 
     D3DShaderResourceView* GetShaderResourceView(SResourceView::KeyType resourceViewID = SResourceView::DefaultView, bool bLegacySrgbLookup = false);
     void SetShaderResourceView(D3DShaderResourceView* pDeviceShaderResource, bool bMultisampled = false);

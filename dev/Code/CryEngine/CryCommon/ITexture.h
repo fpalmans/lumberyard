@@ -298,7 +298,7 @@ public:
     // get low res system memory (used for CPU voxelization)
     virtual const ColorB* GetLowResSystemCopy(uint16& nWidth, uint16& nHeight, int** ppLowResSystemCopyAtlasId) { return 0; }
 
-    virtual bool GenerateMipMaps(bool bSetOrthoProj = false, bool bUseHW = true, bool bNormalMap = false) = 0;
+    virtual void GenerateMipMaps(bool bSetOrthoProj = false, bool bUseHW = true, bool bNormalMap = false) = 0;
     // </interfuscator:shuffle>
 
     void GetMemoryUsage(ICrySizer* pSizer) const
