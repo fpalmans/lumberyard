@@ -4403,12 +4403,17 @@ void CTexture::DrawCubeSide(Vec3& Pos, int tex_size, int side, float fMaxDist)
     CRenderer::CV_r_usezpass = nOldZ;
 }
 
-bool CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
+void CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
+{
+    gRenDev->m_pRT->RC_GenerateMipMaps(this, bSetOrthoProj, bUseHW, bNormalMap);
+}
+
+void CTexture::RT_GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
 {
     if (!(GetFlags() & FT_FORCE_MIPS)
         || bSetOrthoProj || !bUseHW || bNormalMap)  //todo: implement
     {
-        return false;
+        return;
     }
 
     PROFILE_LABEL_SCOPE("GENERATE_MIPS");
@@ -4417,7 +4422,7 @@ bool CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
     CDeviceTexture* pTex = GetDevTexture();
     if (!pTex)
     {
-        return false;
+        return;
     }
 
     D3D11_TEXTURE2D_DESC pDesc;
@@ -4429,7 +4434,7 @@ bool CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
         gcpRendD3D->GetDeviceContext().GenerateMips(m_pDeviceShaderResource);
     }
 
-    return true;
+    return;
 }
 
 void CTexture::DestroyZMaps()

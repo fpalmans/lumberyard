@@ -113,9 +113,12 @@ void CTexture::Readback(AZ::u32 subresourceIndex, StagingHook callback)
 {
 }
 
-bool CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
+void CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
 {
-    return false;
+}
+
+void CTexture::RT_GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
+{
 }
 
 //======================================================================================

@@ -569,6 +569,24 @@ void SRenderThread::RC_UpdateTextureRegion(CTexture* pTex, const byte* data, int
         EndCommandTo(p, m_CommandsLoading);
     }
 }
+void SRenderThread::RC_GenerateMipMaps(CTexture* pTex, bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
+{
+    AZ_TRACE_METHOD();
+    if (IsRenderThread())
+    {
+        return pTex->RT_GenerateMipMaps(bSetOrthoProj, bUseHW, bNormalMap);
+    }
+
+    LOADINGLOCK_COMMANDQUEUE
+    pTex->AddRef();
+
+    byte* p = AddCommand(eRC_GenerateMipMaps, sizeof(void*) + 12);
+    AddPointer(p, pTex);
+    AddDWORD(p, bSetOrthoProj);
+    AddDWORD(p, bUseHW);
+    AddDWORD(p, bNormalMap);
+    EndCommand(p);
+}
 
 bool SRenderThread::RC_DynTexUpdate(SDynTexture* pTex, int nNewWidth, int nNewHeight)
 {
@@ -3116,7 +3134,16 @@ void SRenderThread::ProcessCommands()
             }
         }
         break;
-
+        case eRC_GenerateMipMaps:
+        {
+            CTexture* pTex = ReadCommand<CTexture*>(n);
+            bool bSetOrthoProj = ReadCommand<int>(n) != 0;
+            bool bUseHW = ReadCommand<int>(n) != 0;
+            bool bNormalMap = ReadCommand<int>(n) != 0;
+            pTex->RT_GenerateMipMaps(bSetOrthoProj, bUseHW, bNormalMap);
+            pTex->Release();
+        }
+        break;
         default:
         {
             assert(0);
