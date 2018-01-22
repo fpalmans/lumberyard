@@ -4410,9 +4410,15 @@ void CTexture::GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
 
 void CTexture::RT_GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalMap)
 {
-    if (!(GetFlags() & FT_FORCE_MIPS)
-        || bSetOrthoProj || !bUseHW || bNormalMap)  //todo: implement
+    if (!(GetFlags() & FT_FORCE_MIPS))
     {
+        iLog->LogError("GenerateMipMaps called on texture %s which doesn't have a FT_FORCE_MIPS flag", GetName());
+        return;
+    }
+
+    if(bSetOrthoProj || !bUseHW || bNormalMap)  //todo: implement
+    {
+        iLog->LogError("GenerateMipMaps called on texture %s requesting unimplemented features", GetName());
         return;
     }
 
@@ -4422,6 +4428,7 @@ void CTexture::RT_GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalM
     CDeviceTexture* pTex = GetDevTexture();
     if (!pTex)
     {
+        iLog->LogError("GenerateMipMaps called on texture %s unable to get device texture", GetName());
         return;
     }
 
@@ -4433,8 +4440,6 @@ void CTexture::RT_GenerateMipMaps(bool bSetOrthoProj, bool bUseHW, bool bNormalM
     {
         gcpRendD3D->GetDeviceContext().GenerateMips(m_pDeviceShaderResource);
     }
-
-    return;
 }
 
 void CTexture::DestroyZMaps()
